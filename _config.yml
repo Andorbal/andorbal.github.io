@@ -12,3 +12,5 @@ github_username:  andorbal
 # Build settings
 markdown: kramdown
 highlighter: pygments
+
+permalink:     "/blog/:year/:month/:day/:title"
