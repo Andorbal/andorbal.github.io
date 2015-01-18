@@ -31,3 +31,62 @@ import urllib.request,os,hashlib; h = '2deb499853c4371624f5a07e27c334aa' + 'bf8c
 {% endhighlight %}
 
 Restart Sublime Text if it asked you to.  We'll need to install the [Kulture](https://packagecontrol.io/packages/Kulture) plugin before we install OmniSharp.  Press `Ctrl-Shift-P` and type `Package Control: Install Package` then hit enter.  Typing `Install` is usually enough, though.  Enter `Kulture` into the package list window to install the package.  When that is finished, install OmniSharp the same way.
+
+Next, we'll enable auto-complete in OmniSharp.  OmniSharp's website has [good instructions](https://github.com/OmniSharp/omnisharp-sublime#c-language-specific-settings), but the process is simple.  Open a C# file and open the "Preferences \| Settings - More \| Syntax Specific - User" file.  Add the following settings and save it.
+
+{% highlight javascript %}
+{
+    "auto_complete": true,
+    "auto_complete_selector": "source - comment",
+    "auto_complete_triggers": [ {"selector": "source.cs", "characters": ".<"} ],
+ }
+{% endhighlight %}
+
+Building Through Sublime
+------------------------
+
+The Kulture plugin allows you to build your application through Sublime by pressing F7.  Unfortunately, the plugin tries to execute the build script using `sh` which on Linux Mint is linked to `dash`.  This shell doesn't have all the features of `bash`, so the script fails.  I've created a [pull request](https://github.com/OmniSharp/Kulture/pull/20) to address the issue, but if you want to fix it yourself, you need to edit the ASP.NET.sublime-build file in the Kulture package.  To do this, select "Preferences \| Browse Packages" in Sublime Text.  Navigate to the "Kulture" folder and open the ASP.NET.sublime-build file.
+
+{% highlight javascript %}
+// Replace this line
+"cmd": ["sh", "$packages/Kulture/build.sh"],
+
+// With this
+"cmd": ["bash", "$packages/Kulture/build.sh"],
+{% endhighlight %}
+
+That's it!
+----------
+
+Let's test all this by re-opening the HelloMvc project that we used in the last post.  In Sublime Text, select "File \| Open Folder" and choose the aspnet-home/samples/HelloMvc directory from wherever you cloned the aspnet-home git repository.  Save a project file in the HelloMvc directory by selecting "Project \| Save Project As...".  You can name it whatever you want, but the *.sublime-project file should be in the same directory as the project.json file.
+
+Open the project file you just saved and add a "solution_file" entry.
+
+{% highlight javascript %}
+// The project file looks like this by default.
+{
+  "folders":
+  [
+    {
+      "follow_symlinks": true,
+      "path": "."
+    }
+  ]
+}
+
+// Add the "solution_file" entry so the project looks like this.
+{
+  "folders":
+  [
+    {
+      "follow_symlinks": true,
+      "path": "."
+    }
+  ],
+  "solution_file": "."
+}
+{% endhighlight %}
+
+Save the project file.  Then, select "Tools \| Build System \| ASP.NET" in Sublime Text to enable building the project.  Restart Sublime Text and everything should start working.  Press Ctrl-B to test that the build works.  Next, open HomeController and within a method body, try typing `string.Is`.  If everything went ok, you should see options pop up.  It may take a moment for the very first suggestions to pop up, but it should be quick after that.
+
+Next time, we'll get our project started!
