@@ -89,4 +89,4 @@ Open the project file you just saved and add a "solution_file" entry.
 
 Save the project file.  Then, select "Tools \| Build System \| ASP.NET" in Sublime Text to enable building the project.  Restart Sublime Text and everything should start working.  Press Ctrl-B to test that the build works.  Next, open HomeController and within a method body, try typing `string.Is`.  If everything went ok, you should see options pop up.  It may take a moment for the very first suggestions to pop up, but it should be quick after that.
 
-Next time, we'll get our project started!
+Next time, we'll get our [project started]({% post_url 2015-01-17-aspnet-on-linux-03-project %})!

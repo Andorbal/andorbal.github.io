@@ -78,8 +78,11 @@ You should see a version number if everything installed correctly.  Now we can u
 $ nvm install v0.10.35
 ######################################################################## 100.0%
 Now using node v0.10.35
+
 $ node --version
 v0.10.35
+
+$ nvm alias default v0.10.35
 {% endhighlight %}
 
 Running `node --version` just verifies that it is installed and usable.
