@@ -3,6 +3,7 @@ layout: post
 title:  "RSpec Mocks with arbitrary handling and return values"
 date:   2013-01-21 12:00:00
 categories: ruby rspec test mock
+redirect_from: /blog/2013/1/21/rspec-mocks-with-arbitrary-handling-and-return-values
 ---
 Seeing green isn't always a good thing...
 

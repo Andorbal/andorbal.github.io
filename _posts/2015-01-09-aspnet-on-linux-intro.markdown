@@ -10,4 +10,4 @@ I've been excited about the next version of Asp.net for awhile now, but after se
 
 The application I'll be building is a website that will allow users to track their fitness goals.  At the very least, a user can track their weight, weight lifting exercises, and jogs/runs.  I'm going to assume that the site will be used by millions of people, so I'm going to build load tests and try to keep pages as efficient as possible.
 
-Those are the goals.  Now, lets get the [environment set up]({% post_url 2015-01-09-20-02-00-aspnet-on-linux-01-environment-setup %}).
+Those are the goals.  Now, lets get the [environment set up]({% post_url 2015-01-09-aspnet-on-linux-01-environment-setup %}).

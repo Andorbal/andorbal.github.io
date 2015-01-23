@@ -3,6 +3,7 @@ layout: post
 title:  "Windows 8 Issues"
 date:   2013-01-27 12:00:00
 categories: windows
+redirect_from: /blog/2013/1/27/windows-8-issues
 ---
 
 Yesterday, I decided to install Windows 8 on my basement computer, which I primarily use for audio recording.  Windows 7 was working just fine, but it's the only computer I own that has the ability to run hyper-v, which is necessary to run the Windows Phone 8 emulator.  I installed Windows 8 on my laptop and ensured that all my hardware worked in at least some fashion in Windows 8, so I felt pretty confident.
