@@ -3,7 +3,7 @@ layout: post
 title:  "Running a Windows service from the console"
 date:   2013-01-22 12:00:00
 categories: windows service c# .net console
-redirect_from: /blog/2013/1/22/running-a-wnidows-service-from-the-console
+redirect_from: /blog/2013/1/22/running-a-wnidows-service-from-the-console/
 ---
 
 Running a Windows service from a console is pretty straightforward, but I always forget the test for whether the exe is being run from a console or not.  I know it contains 'interactive', but that's not enough for Google to give me good results.  Luckily, I remembered seeing this in RavenDB, so I just checked out the source in GitHub and voila!
