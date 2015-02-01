@@ -3,6 +3,7 @@ layout: post
 title:  "Building software for Windows is frustrating"
 date:   2013-02-01 12:00:00
 categories: windows
+redirect_from: /blog/2013/2/1/building-software-for-windows-is-frustrating/
 ---
 I'm not talking about writing software for Windows; that can be easy and even sometimes fun.  The problems arise when you try to use an automated build server, but decide that it shouldn't have Visual Studio on it.  This seems like a pretty reasonable thing to do, and TeamCity and Bamboo (the two build servers I've used on Windows) do their best to make the experience decent.
 

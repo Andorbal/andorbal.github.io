@@ -1,8 +1,9 @@
 ---
 layout: post
 title:  "Speeding up ASP.NET development"
-date:   2013-01-21 12:00:00
+date:   2013-02-14 12:00:00
 categories: windows aspnet visualstudio
+redirect_from: /blog/2013/2/14/speeding-up-aspnet-development/
 ---
 Getting an SSD makes a huge improvement in working with .NET projects, but there are other things you can do to speed up your development.  I came across this [blog post](http://blog.lavablast.com/post/2010/12/01/Slash-your-ASPNET-compileload-time.aspx) a little over a year ago and it's got some great suggestions on optimizations you can make to improve your development experience.
 

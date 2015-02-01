@@ -3,6 +3,7 @@ layout: post
 title:  "Windows SDK 7.1 on a build server"
 date:   2013-03-15 12:00:00
 categories: windows sdk build
+redirect_from: /blog/2013/3/15/windows-sdk-71-on-a-build-server/
 ---
 Apparently, there is a bug in the Windows 7.1 SDK where registry values aren't set correctly.  This causes the lookup for the location of the v2.0 build tools to fail which means that v4 build tools get used.  This wasn't causing an issue until we started deploying clickonce applications that used a dll that had an XmlSerializers assembly created for it to computers that did not have .NET 4.0 installed.  When the clickonce installer got to the XmlSerializers assembly, it failed to read the manifest because the assembly was for a newer version of .NET than what was installed on the machine.
 
