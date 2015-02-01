@@ -26,7 +26,7 @@ Once that's done, we're going to install the tools we'll need.
 $ npm install -g generator-aspnet gulp nodemon bower
 {% endhighlight %}
 
-When this completes, you'll have Yeoman and Gulp installed.  We've talked about Yeoman, but we'll get to Gulp, nodemon, and bower later.
+When this completes, you'll have Yeoman and Gulp installed.  We've talked about Yeoman, but we'll get to Gulp, nodemon, and Bower later.
 
 Create the application
 ----------------------
@@ -78,7 +78,7 @@ Now we're going to save a project in Sublime Text so we can get Intellisense and
 Build and run scripts
 ---------------------
 
-We can run our application, but as it is we'll have to stop and restart the server after each change we make.  Instead, what we want to do is have that done for us.  This is where [nodemon](http://nodemon.io/) comes in.  Nodemon watches for file changes and restarts a script when it detects them.
+We can run our application, but as it is we'll have to stop and restart the server after each change we make.  Restarting is quick, but even a few seconds adds up over time.  It would be nice if the server could restart itself after we make some changes.  This is where [nodemon](http://nodemon.io/) comes in.  Nodemon watches for file changes and restarts a script when it detects them.
 
 If you want to see this working, run the following command:
 
@@ -86,12 +86,16 @@ If you want to see this working, run the following command:
 $ nodemon --exec 'k kestrel' --ext cs
 {% endhighlight %}
 
-Navigate to 'http://localhost:5004', and you should see the default asp.net site like before.  Now edit `Controllers/HomeController.cs` and change the value of "Name" on line 17 to something else.  When you save the file, you should see the server restarting in your terminal.  When it finishes, refresh your browser and you should see your changes.  There is a project called [kmon](https://github.com/henriksen/kmon) that is a little simpler to use, but we're going to use a gulp task to run the server.
+This starts nodemon.  It will run the script `k kestrel` and restart this script when any `*.cs` file changes.
+
+Navigate to 'http://localhost:5004' and you should see the default asp.net site like before.  Now edit `Controllers/HomeController.cs` and change the value of "Name" on line 17 to something else.  When you save the file, you should see the server restarting in your terminal.  When it finishes, refresh your browser and you should see your changes.  
+
+There is a project called [kmon](https://github.com/henriksen/kmon) that is a little simpler to use from the command line, but nodemon is easier to use from gulp.
 
 [Gulp](http://gulpjs.com/) is a simple but powerful task runner built in javascript.  We're going to make use of it to pre-process SASS files, merge css and js files into single resources, and run our development server.  We're going to install quite a few plugins that will make our lives easier.
 
 {% highlight bash %}
-$ npm install --save-dev gulp-nodemon main-bower-files gulp-jshint gulp-concat gulp-uglify gulp-rename gulp-sass
+$ npm install --save-dev gulp-nodemon main-bower-files gulp-concat gulp-sass
 {% endhighlight %}
 
 Once the plugins have finished downloading, we're going to use Yeoman to create our Gulpfile and Bower config files.
@@ -101,13 +105,15 @@ $ yo aspnet:Gulpfile
 $ yo aspnet:BowerJson
 {% endhighlight %}
 
-Now, let's use Bower to get jQuery which we'll use to test this setup.  The "--save" parameter tells Bower to save the dependency in the bower.json file that we created earlier.
+[Bower](http://bower.io) is a package manager that focuses on the front-end of your application.  Using Bower makes it easier to get client side resources because it handles dependencies and makes upgrading simpler.
+
+Let's use it to get jQuery, which we'll use to test this setup.  The "--save" parameter tells Bower to save the dependency in the bower.json file that we created earlier.
 
 {% highlight bash %}
 $ bower install jquery --save
 {% endhighlight %}
 
-Add "Views/Shared/global.js" to your "web" project and add the following script:
+Add "scripts/global.js" to your "web" project and add the following script:
 
 {% highlight js %}
 $(() => {
@@ -115,7 +121,7 @@ $(() => {
 });
 {% endhighlight %}
 
-Also add a "Views/Shared/global.scss" file to the same location.
+Also add a "scripts/global.scss" file as well.
 
 {% highlight sass %}
 #test {
@@ -139,6 +145,8 @@ Finally, add the following style link to the end of the head element:
 <link rel="stylesheet" href="css/styles.css" />
 {% endhighlight %}
 
+You may have noticed that we added a reference to `js/script.js`, but that file doesn't exist.  The same is true of `css/styles.css`.  What's more, the stylesheet we created was a [Sass](http://sass-lang.com/) file which browsers don't understand.  We'll use gulp to address these issues.
+
 Update the gulpfile.js created earlier to look like this:
 
 {% highlight js %}
@@ -150,41 +158,58 @@ To learn more visit: https://github.com/gulpjs/gulp/blob/master/docs/README.md
 
 var gulp = require('gulp');
 var mainBowerFiles = require('main-bower-files');
-var jshint = require('gulp-jshint');
 var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
 var sass = require('gulp-sass');
 var nodemon = require('gulp-nodemon');
 
+// Compile and concatenate scripts
 gulp.task('scripts', function() {
-    return gulp.src(mainBowerFiles(/* options */).concat("Views/Shared/**/*.js"), { base: 'bower_components' })
+    return gulp.src(mainBowerFiles().concat("scripts/**/*.js"))
       .pipe(concat('scripts.js'))
       .pipe(gulp.dest('wwwroot/js'));
 });
 
+// Compile and concat styles
 gulp.task('sass', function () {
-    gulp.src('Views/Shared/**/*.scss')
+    gulp.src('styles/**/*.scss')
         .pipe(sass())
-      .pipe(concat('styles.css'))
+        .pipe(concat('styles.css'))
         .pipe(gulp.dest('wwwroot/css'));
 });
 
-// Watch Files For Changes
+// Watch task that rebuilds scripts and styles when files change
 gulp.task('watch', function () {
   gulp.watch('**/*.js', ['scripts']);
   gulp.watch('**/*.scss', ['sass']);
 });
 
-gulp.task('demon', function () {
+// Run the web server and restart on any changes
+gulp.task('daemon', function () {
   nodemon('--ext cs --exec "k kestrel"')
     .on('start', ['watch'])
-    //.on('change', ['watch'])
     .on('restart', function () {
       console.log('restarted!');
     });
 });
 
 // The default task (called when you run `gulp` from CLI)
-gulp.task('default', ['demon']);
+gulp.task('default', ['daemon']);
 {% endhighlight %}
+
+Save the file and run it:
+
+{% highlight bash %}
+$ gulp
+{% endhighlight %}
+
+This does quite a lot!  When you run gulp with no parameters, it starts the task named 'default'.  In our case, the default task does nothing by itself; it just creates a dependency on the 'daemon' task.  This task runs nodemon like we did manually near the top of this post.  The difference between manually running nodemon and running it through gulp is that we can hook into events that it raises.  For example, when it restarts, we print a message notifying us of that.
+
+What's more interesting is what happens when nodemon starts: we start the 'watch' task.  This task sets up two gulp watches that will be responsible for processing our javascript and Sass files.  When a javascript file changes, the 'scripts' task will be run.  When a Sass file changes, the 'sass' task runs.
+
+The 'scripts' task gets a list of all the scripts that Bower has retrieved and adds any javascript file we've created in the 'scripts' directory.  It then merges all the files into a single file named 'scripts.js' and saves it into the `wwwroot/js` directory.
+
+The 'sass' task is similar.  It gets a list of all Sass files in the 'styles' directory and runs it through the Sass processor which converts it to normal css.  Then, like the 'scripts' task, it merges all the files into a single file and saves it into the `wwwroot/css` directory.
+
+That's it!  Now you can develop an asp.net vNext application with as little friction as possible.
+
+Next time, we're going to add tests and use gulp to run them automatically.
