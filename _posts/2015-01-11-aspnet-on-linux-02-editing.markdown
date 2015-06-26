@@ -3,6 +3,7 @@ layout: post
 title:  "Asp.net on Linux: Part 2: Editing"
 date:   2015-01-11 21:42:00
 categories: aspnet linux aspnet_on_linux
+series_order: 2
 ---
 {% include posts-aspnet-on-linux.html %}
 

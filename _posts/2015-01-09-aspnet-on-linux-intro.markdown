@@ -3,6 +3,7 @@ layout: post
 title:  "Asp.net on Linux: Introduction"
 date:   2015-01-09 19:33:12
 categories: aspnet linux aspnet_on_linux
+series_order: 0
 ---
 {% include posts-aspnet-on-linux.html %}
 

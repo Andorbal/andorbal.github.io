@@ -1,7 +1,10 @@
 <ul>
-  {% for post in site.categories.aspnet_on_linux %}
+    {% assign sorted_posts = (site.categories.aspnet_on_linux | sort: 'series_order' | reverse) %}
+  {% for post in sorted_posts %}
+  {% unless post.hide %}
   <li>
       <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
   </li>
+  {% endunless %}
   {% endfor %}
 </ul>
