@@ -1,27 +1,23 @@
 ---
 layout: post
 title:  "Asp.net on Linux: Part 2: Editing"
-date:   2015-01-11 21:42:00
+date:   2015-06-26 20:27:00
 categories: aspnet linux aspnet_on_linux
-hide: true
+series_order: 2
 ---
 {% include posts-aspnet-on-linux.html %}
-
-UPDATE
-======
-There is an updated version of this guide [here]({% post_url 2015-06-26-aspnet-on-linux-02-editing %}).  This version exists for historical reasons only and should no longer be used.
 
 I'm going to use [Sublime Text 3](http://www.sublimetext.com/3) as my editor and I'm assuming you'll do the same.  Sublime Text is not free, but it's worth paying for.  You can use it as a trial so you can do this walkthrough and decide later if you like it or not.  You're free to use whatever you like, but you'll be on your own getting it set up.
 
 Sublime Text
 ------------
 
-Getting Sublime Text is easy.  Use the latest build number instead of 3065 if you want the latest and greatest.  If you're on a 64-bit system, replace "i386" in the following command with "amd64".
+Getting Sublime Text is easy.  Use the latest build number instead of 3065 if you want the latest and greatest.  If you're on a 32-bit system, replace "amd64" in the following command with "i386".
 
 {% highlight bash %}
-$ wget http://c758482.r82.cf2.rackcdn.com/sublime-text_build-3065_i386.deb
-$ sudo dpkg -i sublime-text_build-3065_i386.deb
-$ rm sublime-text_build-3065_i386.deb
+$ wget http://c758482.r82.cf2.rackcdn.com/sublime-text_build-3083_amd64.deb
+$ sudo dpkg -i sublime-text_build-3083_amd64.deb
+$ rm sublime-text_build-3083_amd64.deb
 {% endhighlight bash %}
 
 OmniSharp
@@ -32,7 +28,7 @@ OmniSharp
 To install the package manager, open the Sublime Text console by pressing ``Ctrl+` `` and paste in the following command.
 
 {% highlight bash %}
-import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)
+import urllib.request,os,hashlib; h = '2deb499853c4371624f5a07e27c334aa' + 'bf8c4e67d14fb0525ba4f89698a6d7e1'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)
 {% endhighlight %}
 
 Restart Sublime Text if it asked you to.  We'll need to install the [Kulture](https://packagecontrol.io/packages/Kulture) plugin before we install OmniSharp.  Press `Ctrl-Shift-P` and type `Package Control: Install Package` then hit enter.  Typing `Install` is usually enough, though.  Enter `Kulture` into the package list window to install the package.  When that is finished, install OmniSharp the same way.
@@ -92,6 +88,6 @@ Open the project file you just saved and add a "solution_file" entry.
 }
 {% endhighlight %}
 
-Save the project file.  Then, select "Tools \| Build System \| ASP.NET" in Sublime Text to enable building the project.  Restart Sublime Text and everything should start working.  Press Ctrl-B to test that the build works.  Next, open HomeController and within a method body, try typing `string.Is`.  If everything went ok, you should see options pop up.  It may take a moment for the very first suggestions to pop up, but it should be quick after that.
+Save the project file.  Then, select "Tools \| Build System \| ASP.NET" in Sublime Text to enable building the project.  Restart Sublime Text and everything should start working.  Press Ctrl-B to test taht the build works.  Next, open HomeController and within a method body, try typing `string.Is`.  If everything went ok, you should see options pop up.  It may take a moment for the very first suggestions to pop up, but it should be quick after that.
 
-Next time, we'll get our [project started]({% post_url 2015-01-17-aspnet-on-linux-03-project %})!
+Next time, we'll get our [project started]({% post_url 2015-06-26-aspnet-on-linux-03-project %})!

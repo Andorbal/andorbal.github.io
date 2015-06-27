@@ -187,4 +187,4 @@ $ dnx . kestrel
 
 After you see 'started' in the output, open a browser and go to [http://localhost:5004](http://localhost:5004).  If you see the standard asp.net welcome page, congratulations: you can now run asp.net applications on Linux!  
 
-Next time, we'll set up our [editing environment]({% post_url 2015-01-11-aspnet-on-linux-02-editing %}).
+Next time, we'll set up our [editing environment]({% post_url 2015-06-26-aspnet-on-linux-02-editing %}).

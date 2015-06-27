@@ -1,17 +1,11 @@
 ---
 layout: post
 title:  "Asp.net on Linux: Part 3: Creating the project"
-date:   2015-01-17 22:33:00
+date:   2015-06-26 20:33:00
 categories: aspnet linux aspnet_on_linux
 series_order: 3
-hide: true
 ---
 {% include posts-aspnet-on-linux.html %}
-
-UPDATE
-======
-There is an updated version of this guide [here]({% post_url 2015-06-26-aspnet-on-linux-03-project %}).  This version exists for historical reasons only and should no longer be used.
-
 
 We're going to create the project shell today.  We'll add tools to generate the project for us and set up a client library package manager.  We'll also set up the beginning of our build system.  So let's get started!
 
@@ -23,14 +17,14 @@ Yeoman
 To make things simple, lets set our default version of node so that we don't have to keep telling nvm which version to use.  We should have done this when we installed nvm, and I've updated that post to include this step.
 
 {% highlight bash %}
-$ nvm use 0.10
-$ nvm alias default v0.10.35
+$ nvm use 0.12.5
+$ nvm alias default v0.12.3
 {% endhighlight %}
 
 Once that's done, we're going to install the tools we'll need.
 
 {% highlight bash %}
-$ npm install -g generator-aspnet gulp nodemon bower
+$ npm install -g yo generator-aspnet gulp nodemon bower
 {% endhighlight %}
 
 When this completes, you'll have Yeoman and Gulp installed.  We've talked about Yeoman, but we'll get to Gulp, nodemon, and Bower later.
@@ -60,8 +54,8 @@ Let's make sure we can run the application!  Navigate to the web directory, rest
 
 {% highlight bash %}
 $ cd web
-$ kpm restore
-$ k kestrel
+$ dnu restore
+$ dnx . kestrel
 {% endhighlight %}
 
 Open a browser and navigate to 'http://localhost:5004'.  You should see the default asp.net web site.  If everything looks good, hit enter in your terminal and then ctrl-c to stop kestrel.
@@ -90,14 +84,12 @@ We can run our application, but as it is we'll have to stop and restart the serv
 If you want to see this working, run the following command:
 
 {% highlight bash %}
-$ nodemon --exec 'k kestrel' --ext cs
+$ nodemon --exec 'dnx . kestrel' --ext cs
 {% endhighlight %}
 
 This starts nodemon.  It will run the script `k kestrel` and restart this script when any `*.cs` file changes.
 
 Navigate to 'http://localhost:5004' and you should see the default asp.net site like before.  Now edit `Controllers/HomeController.cs` and change the value of "Name" on line 17 to something else.  When you save the file, you should see the server restarting in your terminal.  When it finishes, refresh your browser and you should see your changes.  
-
-There is a project called [kmon](https://github.com/henriksen/kmon) that is a little simpler to use from the command line, but nodemon is easier to use from gulp.
 
 [Gulp](http://gulpjs.com/) is a simple but powerful task runner built in javascript.  We're going to make use of it to pre-process SASS files, merge css and js files into single resources, and run our development server.  We're going to install quite a few plugins that will make our lives easier.
 
