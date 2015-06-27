@@ -7,21 +7,12 @@ series_order: 3
 ---
 {% include posts-aspnet-on-linux.html %}
 
-We're going to create the project shell today.  We'll add tools to generate the project for us and set up a client library package manager.  We'll also set up the beginning of our build system.  So let's get started!
+We're going to create the project shell today.  We'll add tools to tools that will help us and set up a client library package manager.  We'll also set up the beginning of our build system.  So let's get started!
 
 Yeoman
 ------
 
-[Yeoman](http://yeoman.io/) is a tool designed to help build client side applications.  There are a large number of generator plugins, but today we'll be using the [aspnet generator](https://www.npmjs.com/package/generator-aspnet) plugin.  Let's get them both now.
-
-To make things simple, lets set our default version of node so that we don't have to keep telling nvm which version to use.  We should have done this when we installed nvm, and I've updated that post to include this step.
-
-{% highlight bash %}
-$ nvm use 0.12.5
-$ nvm alias default v0.12.3
-{% endhighlight %}
-
-Once that's done, we're going to install the tools we'll need.
+[Yeoman](http://yeoman.io/) is a tool designed to help build client side applications.  There are a large number of generator plugins, but today we'll be using the [aspnet generator](https://www.npmjs.com/package/generator-aspnet) plugin.  Let's get them both -- and a few other tools we'll use -- now.  The aspnet generator has templates to build entire projects for us, but we're going to use it for smaller chunks so we can see what goes into creating a project.
 
 {% highlight bash %}
 $ npm install -g yo generator-aspnet gulp nodemon bower
@@ -42,15 +33,40 @@ $ npm init
 
 Npm will ask you quite a few questions.  Some of them, like author, have obvious answers.  However, if you don't know the answer to any of them you can just leave them blank; the questions are just used to populate the package.json file.
 
-We'll use Yeoman to generate the shell of the web site and a few other files that we'll need.
+Let's create a new directory for the web application and use Yeoman to create the global project shell.
+
+{% highlight bash %}
+$ mkdir web
+$ yo aspnet:JSON global
+{% endhighlight %}
+
+This creates an empty json file named global.json which defines the root of our application.  OmniSharp looks for this file to see which projects are associated with each other.  Populate the file with this:
+
+{% highlight js %}
+{
+    "projects": ["web"]
+}
+{% endhighlight %}
+
+We'll use Yeoman to create the shell of our application.
 
 {% highlight bash %}
 $ yo aspnet
 {% endhighlight %}
 
-Select MVC Application when it asks what kind of application you want to create.  Enter 'web' when it asks what to name the application.  The name can be whatever you want, but it will be easier to follow along if you stick with my names.
+Choose "Empty Application" and name the application 'web' to make it easier to follow along.  Navigate into the newly created directory and modify the `project.json` file.  Because we won't be supporing .NET Core yet, we can remove the `dnxcore50` entry.  Let's use Yeoman again to create a basic gulpfile.
 
-Let's make sure we can run the application!  Navigate to the web directory, restore the NuGet packages, and start the server:
+{% highlight bash %}
+$ yo aspnet:Gulpfile
+{% endhighlight %}
+
+[Gulp](http://gulpjs.com/) is a simple but powerful task runner built in javascript.  We're going to make use of it to pre-process SASS files, merge css and js files into single resources, and run our development server.  We're going to install quite a few plugins that will make our lives easier.
+
+{% highlight bash %}
+$ npm install --save-dev gulp gulp-nodemon gulp-bower main-bower-files gulp-concat gulp-sass
+{% endhighlight %}
+
+Now let's make sure we can run the application.  Navigate to the web directory, restore the NuGet packages, and start the server:
 
 {% highlight bash %}
 $ cd web
@@ -58,23 +74,7 @@ $ dnu restore
 $ dnx . kestrel
 {% endhighlight %}
 
-Open a browser and navigate to 'http://localhost:5004'.  You should see the default asp.net web site.  If everything looks good, hit enter in your terminal and then ctrl-c to stop kestrel.
-
-Now we're going to save a project in Sublime Text so we can get Intellisense and the other benefits of OmniSharp.  Open Sublime Text and select "File \| Open Folder".  From the dialog, select "aspnet-demo/web".  Now, select "Project \| Save Project As..." and save the project file in the "aspnet-demo/web" folder.  You can name the project whatever you want, but I'm going to name it "aspnet-demo-web.sublime-project".  Once it's saved, open the file in Sublime Text and add the "solution_file" entry to the bottom of the file so that it looks like this:
-
-{% highlight js %}
-{
-  "folders":
-  [
-    {
-      "follow_symlinks": true,
-      "path": "."
-    }
-  ],
-  "solution_file": "."
-}
-
-{% endhighlight %}
+Open a browser and navigate to 'http://localhost:5001'.  You should see "Hello World!".  If everything looks good, hit enter in your terminal to stop kestrel.
 
 Build and run scripts
 ---------------------
@@ -87,30 +87,14 @@ If you want to see this working, run the following command:
 $ nodemon --exec 'dnx . kestrel' --ext cs
 {% endhighlight %}
 
-This starts nodemon.  It will run the script `k kestrel` and restart this script when any `*.cs` file changes.
+This starts nodemon.  It will run the script `dnx . kestrel` and restart this script when any `*.cs` file changes.
 
-Navigate to 'http://localhost:5004' and you should see the default asp.net site like before.  Now edit `Controllers/HomeController.cs` and change the value of "Name" on line 17 to something else.  When you save the file, you should see the server restarting in your terminal.  When it finishes, refresh your browser and you should see your changes.  
+Navigate to 'http://localhost:5001/' and you should see "Hello World!" as you did before.  Now edit `Startup.cs` and change "Hello World!" on line 22 to something else.  When you save the file, you should see the server restarting in your terminal.  When it finishes, refresh your browser and you should see your changes.
 
-[Gulp](http://gulpjs.com/) is a simple but powerful task runner built in javascript.  We're going to make use of it to pre-process SASS files, merge css and js files into single resources, and run our development server.  We're going to install quite a few plugins that will make our lives easier.
-
-{% highlight bash %}
-$ npm install --save-dev gulp-nodemon main-bower-files gulp-concat gulp-sass
-{% endhighlight %}
-
-Once the plugins have finished downloading, we're going to use Yeoman to create our Gulpfile and Bower config files.
-
-{% highlight bash %}
-$ yo aspnet:Gulpfile
-$ yo aspnet:BowerJson
-{% endhighlight %}
+Bower
+-----
 
 [Bower](http://bower.io) is a package manager that focuses on the front-end of your application.  Using Bower makes it easier to get client side resources because it handles dependencies and makes upgrading simpler.
-
-Let's use it to get jQuery, which we'll use to test this setup.  The "--save" parameter tells Bower to save the dependency in the bower.json file that we created earlier.
-
-{% highlight bash %}
-$ bower install jquery --save
-{% endhighlight %}
 
 Add "scripts/global.js" to your "web" project and add the following script:
 
@@ -128,14 +112,36 @@ Also add a "scripts/global.scss" file as well.
 }
 {% endhighlight %}
 
-Now open the _Layout.cshtml and add `<div id="test" />` above the footer in the body of the document.  Also make the following change near the bottom of the file:
+Open `web/Views/Home/Index.cshtml` and replace its contents with the following: 
 
 {% highlight html %}
-<!-- Replace the following line -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+@{
+    ViewBag.Title = "Home Page";
+}
 
-<!-- With this -->
-<script src="js/script.js"></script>
+<div id="test" />
+{% endhighlight %}
+
+Then open the _Layout.cshtml and replace it with this:
+
+{% highlight html %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewBag.Title</title>
+
+        <link rel="stylesheet" href="~/css/styles.css" />
+    </head>
+    <body>
+        @RenderBody()
+
+        <script src="~/js/script.js"></script>
+        @RenderSection("scripts", required: false)
+    </body>
+</html>
+
 {% endhighlight %}
 
 Finally, add the following style link to the end of the head element:

@@ -18,21 +18,21 @@ Prerequisites
 There are quite a few packages that need to be installed in order for everything else to work and it's simplest to get them all at once.  
 
 {% highlight bash %}
-sudo apt-get install autoconf automake build-essential libtool git curl unzip
+$ sudo apt-get install autoconf automake build-essential libtool git curl unzip
 {% endhighlight %}
 
 Now, we need to get an updated version of [libuv](https://github.com/libuv/libuv) because the current implementation of [Kestrel](https://github.com/aspnet/KestrelHttpServer), a simple web server, requires a version of libuv that is not in the Linux Mint package manager.  I've got each step listed separately to help troubleshoot if anything goes wrong.
 
 {% highlight bash %}
-sudo apt-get install automake libtool curl
-curl -sSL https://github.com/libuv/libuv/archive/v1.4.2.tar.gz | sudo tar zxfv - -C /usr/local/src
-cd /usr/local/src/libuv-1.4.2
-sudo sh autogen.sh
-sudo ./configure
-sudo make
-sudo make install
-sudo rm -rf /usr/local/src/libuv-1.4.2 && cd ~/
-sudo ldconfig
+$ sudo apt-get install automake libtool curl
+$ curl -sSL https://github.com/libuv/libuv/archive/v1.4.2.tar.gz | sudo tar zxfv - -C /usr/local/src
+$ cd /usr/local/src/libuv-1.4.2
+$ sudo sh autogen.sh
+$ sudo ./configure
+$ sudo make
+$ sudo make install
+$ sudo rm -rf /usr/local/src/libuv-1.4.2 && cd ~/
+$ sudo ldconfig
 {% endhighlight %}
 
 Configure git
