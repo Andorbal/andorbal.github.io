@@ -5,7 +5,7 @@ date:   2015-12-28 20:00:00
 categories: programming development ipad mobile
 ---
 
-I'm trying an experiment that I never thought I would: writing code on an iPad without a hardware keyboard. I certainly don't plan on doing anything too heavy, but with an 18 month old running around, I'm looking for a way to squeeze in a few minutes of coding here and there. Also, I'm trying to further justify buyimg the iPad mini 4!
+I'm trying an experiment that I never thought I would: writing code on an iPad without a hardware keyboard. I certainly don't plan on doing anything too heavy, but with an 18 month old running around, I'm looking for a way to squeeze in a few minutes of coding here and there. Also, I'm trying to further justify buying the iPad mini 4!
 
 There are two apps that are making this journey possible: [Textastic](http://www.textasticapp.com) and [Working Copy](http://workingcopyapp.com). Textastic is the code editor that I will be using and Working Copy allows me to interact with my git repositories. It's not a perfect combination, but it is much better than I expected.
 

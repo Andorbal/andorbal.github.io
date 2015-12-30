@@ -3,7 +3,7 @@ title: Andrew's Blog
 email: andorbal@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
   There will eventually be a better description here, but right now this is my attempt
-  to reboot my blo.
+  to reboot my blog.
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://andybenz.com" # the base hostname & protocol for your site
 twitter_username: andorbal
