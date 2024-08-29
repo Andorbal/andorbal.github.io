@@ -18,3 +18,7 @@
   description: Open source game engine
   tags: [ game_engine, software, 2D, 3D ]
   
+- title: Easings
+  href: https://easings.net
+  description: Website that shows various easing functions, including CSS values and the actual mathematic function to generate them
+  tags: [ math, graphics ]
