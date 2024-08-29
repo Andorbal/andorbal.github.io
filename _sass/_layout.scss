@@ -1,3 +1,6 @@
+---
+---
+
 /**
  * Site header
  */
@@ -233,4 +236,27 @@
             font-size: 18px;
         }
     }
+}
+
+/**
+Links 
+**/
+.link-list {
+  dt {
+    font-size: 20px;
+  }
+  dd {
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    margin: 0;
+    li {
+      display: inline-block;
+      margin: 0.2rem;
+      padding: 0.2rem 0.6rem;
+      color: #fff;
+      border-radius: 0.4rem;
+    }
+  }
 }

@@ -1,5 +1,5 @@
 # Site settings
-title: Andrew's Blog
+title: Andrew's Site
 email: andorbal@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
   There will eventually be a better description here, but right now this is my attempt
@@ -17,3 +17,7 @@ permalink:     "/blog/:year/:month/:day/:title"
 
 gems:
   - jekyll-redirect-from
+
+collections:
+  links:
+    output: true

@@ -1,0 +1,20 @@
+- title: ShaderToy
+  href: https://www.shadertoy.com/user/andorbal
+  description: Playerground for GLSL shaders
+  tags: [ shaders, graphics ]
+
+- title: GraphToy
+  href: https://graphtoy.com
+  description: Playground for visualizing graphs and equations
+  tags: [ shaders, math, graphics ]
+
+- title: Blender
+  href: http://blender.org
+  description: Open source 3D modeling software
+  tags: [ graphics, 3D, software ]
+
+- title: Godot
+  href: http://godotengine.org
+  description: Open source game engine
+  tags: [ game_engine, software, 2D, 3D ]
+  
