@@ -253,10 +253,37 @@ Links
     margin: 0;
     li {
       display: inline-block;
-      margin: 0.2rem;
-      padding: 0.2rem 0.6rem;
-      color: #fff;
-      border-radius: 0.4rem;
     }
   }
+}
+
+.link-container {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 10px;
+  row-gap: 15px;
+}
+
+.tag-pill {
+  display: block;
+  margin: 0.2rem;
+  padding: 0.2rem 0.6rem;
+  color: #fff;
+  border-radius: 0.4rem;
+
+  a {
+    font-size: 0.8rem;
+    color: #fff;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    .tag-count {
+      margin-left: 0.4rem;
+    }
+  }
+}
+
+.tag-list {
+
 }

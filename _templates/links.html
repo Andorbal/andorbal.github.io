@@ -1,0 +1,29 @@
+<style>
+{% tag_classes %}
+</style>
+<div class="home">
+  <h1 class="post-title"><a href="/links/">{{ page.title }}</a></h1>
+
+  <div class="link-container">
+    <dl class="link-list">
+      {% assign links_by_title = page.tag_links | sort: "title" %}
+      {% for link in links_by_title %}
+      <dt><a href="{{ link.href }}" target="_blank">{{ link.title }}</a></dt>
+      <dd>
+        {{ link.description }}
+        <ul class="tags">
+          {% assign tags_by_name = link.tags | sort %}
+          {% for tag in tags_by_name %}<li class="tag-pill {{ tag | tag_class }}"><a href="/links/{{ tag }}/">{{ tag }}</a></li>{% endfor %}
+        </ul>
+      </dd>
+  
+      {% endfor %}
+    </dl>
+    <ul class="tag-list">
+      {% for link_tag in page.all_tags %}
+        <li class="tag-pill {{ link_tag.tag | tag_class }}"><a href="/links/{{ link_tag.tag }}"><span class="tag-name">{{ link_tag.name }}</span><span class="tag-count">({{ link_tag.count }})</span></a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  
+</div>

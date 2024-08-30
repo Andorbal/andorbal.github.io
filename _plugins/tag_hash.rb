@@ -14,7 +14,7 @@ module Jekyll
 
   module TagFilter
     def tag_class(input)
-      tagColor = input.hash % TagColors.colors.length
+      tagColor = input.sum % TagColors.colors.length
       "tag-#{tagColor}"
     end
   end
